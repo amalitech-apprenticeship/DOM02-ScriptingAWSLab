@@ -5,9 +5,7 @@ if [[ -f .env ]]; then
     source .env
 fi
 
-RAW_KEY="${T1_KEY#tag:}"
-RAW_KEY="${RAW_KEY:-Project}"
-FILTER_KEY="tag:${RAW_KEY}"
+FILTER_KEY="tag:${T1_KEY}"
 T1_VALUE="${T1_VALUE:-AutomationLab}"
 KEY_NAME="${KEY_NAME:-amali-ec2-pair}"
 
