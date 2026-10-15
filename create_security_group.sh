@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-#Create a VPC Group for the Security group
-VPC_ID=$(aws ec2 create-vpc --cidr-block 10.0.0.0/24 \
-    --query 'Vpc.VpcId' \
-    --output text) || exit 1
+if [[ ! -f .env ]]; then
+    echo "[ERROR]: .env file not found"
+    exit 1
+fi
 
-echo "VPC Created"
+source .env
 
 SG_ID=$(aws ec2 create-security-group \
     --group-name scripting \
@@ -14,7 +14,11 @@ SG_ID=$(aws ec2 create-security-group \
     --query 'GroupId' \
     --output text) || exit 1
 
-echo "Security Group Created $SG_ID"
+echo "SG_ID:$SG_ID"
+
+aws ec2 create-tags \
+    --resources "$SG_ID" \
+    --tags Key=Project,Value=AutomationLab
 
 SG_RULES=$(aws ec2 authorize-security-group-ingress \
     --group-id "$SG_ID" \
@@ -23,4 +27,4 @@ SG_RULES=$(aws ec2 authorize-security-group-ingress \
     --output text) || exit 1
 
 echo "Security Group Rules Updated"
-echo "$SG_RULES"
+echo "SG_RULES:$SG_RULES"
