@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+umask 007
 
 aws ec2 create-key-pair \
     --key-name amali-ec2-pair \
@@ -15,7 +16,8 @@ INSTANCE_ID=$(aws ec2 run-instances \
     --query 'Instances[0].InstanceId' \
     --output text) || exit 1
 
-aws ec2 create-tags --resources "$INSTANCE_ID" \
+aws ec2 create-tags \
+    --resources "$INSTANCE_ID" \
     --tags Key=Project,Value=AutomationLab || exit 1
 
 echo "Instance successfully tagged"
