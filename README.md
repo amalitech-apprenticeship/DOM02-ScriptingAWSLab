@@ -195,3 +195,24 @@ Planned behavior:
 - **Tag everything at creation**: apply `Project=AutomationLab` to every resource, including the IGW and route table, so `cleanup_resources.sh` can always find them.
 - **Clean up on partial failure**: optionally call `cleanup_resources.sh` if provisioning fails partway, so no orphaned resources are left behind.
 - **Log clearly**: show each step's status (`[1/4] Creating network...`) and print a summary of the created resource IDs at the end.
+
+
+
+
+## Screenshots of Scripts Successfully Running
+
+Creating the Network Configuration for the EC2
+![alt text](./screenshots/network_setup.png)
+
+Creating the Security Group and its rules
+![alt text](./screenshots/sg_creation.png)
+
+Creating the EC2 Instance
+![alt text](./screenshots/ec2_creation.png)
+
+Creating the S3 Bucket
+![alt text](./screenshots/s3_creation.png)
+
+Cleaning Up the Resources
+![alt text](./screenshots/cleanup_1.png)
+![alt text](./screenshots/cleanup_2.png)
