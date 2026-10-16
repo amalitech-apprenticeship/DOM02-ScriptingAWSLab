@@ -8,14 +8,16 @@ fi
 source .env
 
 
-umask 007
+(umask 007
 
 aws ec2 create-key-pair \
     --key-name amali-ec2-pair \
     --key-type rsa \
     --key-format pem \
     --query "KeyMaterial" \
-    --output text > amali-ec2-pair.pem
+    --output text > amali-ec2-pair.pem)
+
+chmod 400 amali-ec2-pair.pem
 
 SUBNET_ID=$(aws ec2 create-subnet \
     --vpc-id "$VPC_ID" \
@@ -39,6 +41,7 @@ INSTANCE_ID=$(aws ec2 run-instances \
     --instance-type t3.micro \
     --subnet-id "$SUBNET_ID" \
     --key-name amali-ec2-pair \
+    --security-group-ids "$SG_ID" \
     --associate-public-ip-address \
     --query 'Instances[0].InstanceId' \
     --output text) || exit 1
