@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -euo pipefail
 if [[ ! -f .env ]]; then
     echo "[ERROR]: .env file not found"
     exit 1
@@ -22,7 +22,7 @@ aws ec2 create-tags \
 
 SG_RULES=$(aws ec2 authorize-security-group-ingress \
     --group-id "$SG_ID" \
-    --ip-permissions 'IpProtocol=tcp,FromPort=80,ToPort=80,IpRanges=[{CidrIp=0.0.0.0/0}]' 'IpProtocol=tcp,FromPort=22,ToPort=22,IpRanges=[{CidrIp=0.0.0.0/0}]' \
+    --ip-permissions "IpProtocol=tcp,FromPort=80,ToPort=80,IpRanges=[{CidrIp="$MY_IP"}]" "IpProtocol=tcp,FromPort=22,ToPort=22,IpRanges=[{CidrIp=$MY_IP}]" \
     --query 'SecurityGroupRules' \
     --output text) || exit 1
 

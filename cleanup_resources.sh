@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -euo pipefail
 # 1. Source environment variables or set defaults
 if [[ -f .env ]]; then
     source .env
